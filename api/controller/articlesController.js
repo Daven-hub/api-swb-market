@@ -34,7 +34,7 @@ exports.addArticles =  (req, res) =>{
     var art = new Articles({
         nom:req.body.nom,
         prix:req.body.prix,
-        categorie:req.body.categorie
+        quantite:req.body.quantite
     })
     art.save().then((result)=>{
         res.status(201).json({
@@ -64,7 +64,7 @@ exports.getArticle =  (req, res) => {
     })
 }
 
-//update un article  if(req.body.categorie) art.categorie=req.boby.categorie
+//update un article  if(req.body.quantite) art.quantite=req.body.quantite
 exports.updateArticle =  (req, res) => {
     const id = req.params.id
     if(id.length != 24) return res.status(400).json({
@@ -73,7 +73,8 @@ exports.updateArticle =  (req, res) => {
     let art = {}
     if(req.body.nom) art.nom=req.body.nom
     if(req.body.prix) art.prix=req.body.prix
-    if(req.body.categorie) art.categorie=req.boby.categorie
+    if(req.body.quantite) art.quantite=req.body.quantite
+    if(req.body._idsellers) art. _idsellers=req.body. _idsellers
     console.log(art.nom)
     Articles.update({_id:id}, {$set:art}).exec().then(result => {
         res.status(200).json({

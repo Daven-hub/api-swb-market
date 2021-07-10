@@ -62,7 +62,7 @@ exports.getCustomer =  (req, res) => {
     })
 }
 
-//update un client  if(req.body.categorie) art.categorie=req.boby.categorie
+//update un client  if(req.body.categorie) art.categorie=req.body.categorie
 exports.updateCustomer =  (req, res) => {
     const id = req.params.id
     if(id.length != 24) return res.status(400).json({

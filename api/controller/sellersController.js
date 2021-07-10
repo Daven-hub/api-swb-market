@@ -1,6 +1,5 @@
-//Importation de mon model
-//Importation de mon model
-const Categories = require('../model/Categories')
+// Importation de mon model
+const Sellers = require('../model/Sellers')
 
 exports.helloWord =  (req, res) => {
     res.json({
@@ -9,15 +8,12 @@ exports.helloWord =  (req, res) => {
     });
 }
 
-//const id = req.params.id
-//findById(id)
-
-//Affichage de tous mes Categories
-exports.getCategories = (req, res) => {
+// Affichage de tous mes utilisateurs Vendeurs
+exports.getSellers = (req, res) => {
     var query = ""
     if(req.query.s)  query=req.query.s
- //Rechercher un Categorie spécifique  
-  Categories.find({nom: {$regex: query, $options: "$i"}}).exec().then((result) =>{
+ //Rechercher un Vendeur spécifique  
+  Sellers.find({nom: {$regex: query, $options: "$i"}}).exec().then((result) =>{
       res.status(200).json({
           count: result.length,
           data: result
@@ -30,29 +26,32 @@ exports.getCategories = (req, res) => {
   })
 }
 
-//Ajout Categories
-exports.addCategories =  (req, res) =>{
-    var cat = new Categories({
+//Ajouter un utilisateur Vendeur
+exports.addSellers =  (req, res) =>{
+    var art = new Sellers({
         nom:req.body.nom,
+        prenom:req.body.prenom,
+        email:req.body.email,
+        telephone:req.body.telephone
     })
-    cat.save().then((result)=>{
+    art.save().then((result)=>{
         res.status(201).json({
-            message:'Cration réussie',
+            message:'Vendeur ajouté',
             data: result
         })
     })
 
 }
 
-//Pour retourner un seul Categorie
-exports.getCategorie =  (req, res) => {
+//Pour retourner un seul Vendeur
+exports.getSeller =  (req, res) => {
     const id = req.params.id
     if(id.length != 24) return res.status(400).json({
         message: 'id invalid'
     })
-    Categories.findById(id).exec().then(result => {
+    Sellers.findById(id).exec().then(result => {
         res.status(200).json({
-            message:'Categorie retrouvé',
+            message:'Vendeur retrouvé',
             data :result
         })
     }).catch(error =>{
@@ -63,17 +62,19 @@ exports.getCategorie =  (req, res) => {
     })
 }
 
-//update un Categorie  if(req.body.categorie) cat.categorie=req.body.categorie
-exports.updateCategorie =  (req, res) => {
+//update un Vendeur  if(req.body.categorie) art.categorie=req.body.categorie
+exports.updateSeller =  (req, res) => {
     const id = req.params.id
     if(id.length != 24) return res.status(400).json({
         message: 'id invalid'
     })
-    let cat = {}
-    if(req.body.nom) cat.nom=req.body.nom
-   
-    console.log(cat.nom)
-    Categories.update({_id:id}, {$set:cat}).exec().then(result => {
+    let sell = {}
+    if(req.body.nom) sell.nom=req.body.nom
+    if(req.body.prenom) sell.prenom=req.body.prenom
+    if(req.body.email) sell.email=req.body.email
+    if(req.body.telephone) sell.telephone=req.body.telephone
+    console.log(sell.nom)
+    Sellers.update({_id:id}, {$set:sell}).exec().then(result => {
         res.status(200).json({
             message : 'Modification réussie',
             data : result
@@ -87,15 +88,15 @@ exports.updateCategorie =  (req, res) => {
     })
 }
 
-//Delete une Categorie
+//Delete un article
 
-exports.deleteCategories = (req, res) => {
+exports.deleteSellers = (req, res) => {
     const id = req.params.id
     if(id.length != 24) return res.status(400).json({
         message: 'id invalid'
     })
 
-    Categories.remove({_id:id}).exec().then(result => {
+    Sellers.remove({_id:id}).exec().then(result => {
         res.status(200).json({
             message : 'Suppression reussie'
         })

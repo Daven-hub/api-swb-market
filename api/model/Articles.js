@@ -9,9 +9,12 @@ const ArticlesSchema = mongoose.Schema({
         type:Number,
         required:true,
     },
-      categorie:{
-            type: String,
+      quantite:{
+            type: Number,
             required:true,
+    },
+    _idsellers:{
+        required:false,
     }
 })
 

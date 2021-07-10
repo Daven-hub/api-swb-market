@@ -4,6 +4,7 @@ const dotenv = require('dotenv')
 const mongoose = require('mongoose');
 const articles = require('./api/router/articles')
 const customers = require('./api/router/customers')
+const sellers = require('./api/router/sellers')
 const categories = require('./api/router/categories')
 // Initialise l'application 
 const app = express();
@@ -28,6 +29,7 @@ const port = process.env.PORT || 8080 ;
 app.get('/', (req, res) => res.send('Hello World with Express'));
 app.use('/articles', articles)
 app.use('/customers', customers)
+app.use('/sellers', sellers)
 app.use('/categories', categories)
 // Lancer l'application pour écouter le port spécifié 
 app.listen(port, function () { 
